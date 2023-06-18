@@ -26,6 +26,7 @@ class ImagePatcher(torch.nn.Module):
         patched = patched.flatten(0, 1).flatten(-2, -1)
         return patched
 
+    @torch.no_grad()
     def forward(self, batch: torch.Tensor) -> torch.Tensor:
         """Converts a tensor of shape (BATCH_SIZE, X, Y) to (BATCH_SIZE, X * Y / PATCH_SIZE, PATCH_SIZE)"""
         return torch.stack([self.patchify(image.cpu()) for image in batch]).to(self.device)
