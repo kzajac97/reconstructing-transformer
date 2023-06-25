@@ -31,7 +31,7 @@ class MiniVisionTransformerClassifier(torch.nn.Module):
         self.patcher = ImagePatcher(patch_size=patch_size, stride=patch_size)
         self.embedding = torch.nn.Linear(in_features=model_dim, out_features=model_dim, bias=False)
         self.positional_encoding = PositionalEncoder(d_model=model_dim, max_len=1 + patches_in_image)
-        self.class_token = torch.nn.Parameter(torch.rand(1, model_dim))
+        self.pooler = torch.nn.Parameter(torch.rand(1, model_dim))
 
         self.encoder = torch.nn.TransformerEncoder(
             torch.nn.TransformerEncoderLayer(
@@ -45,7 +45,7 @@ class MiniVisionTransformerClassifier(torch.nn.Module):
     def forward(self, batch: torch.Tensor, return_embeddings: bool = False) -> torch.Tensor:
         patches = self.patcher(batch)
         embeddings = self.embedding(patches)
-        embeddings = torch.cat([self.class_token.expand(batch.size(0), 1, -1), embeddings], dim=1)
+        embeddings = torch.cat([self.pooler.expand(batch.size(0), 1, -1), embeddings], dim=1)
         embeddings = self.positional_encoding(embeddings)
         embeddings = self.encoder(embeddings)
 
