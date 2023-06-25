@@ -1,6 +1,8 @@
 import math
 from functools import cached_property
 
+import torch
+
 
 class PositionalEncoder(torch.nn.Module):
     """

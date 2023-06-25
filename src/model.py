@@ -1,3 +1,9 @@
+import torch
+from positional_encoder import PositionalEncoder
+
+from patcher import ImagePatcher
+
+
 class MiniVisionTransformerClassifier(torch.nn.Module):
     """
     Mini Vision Transformer classifier is a minimal auto-didactic implementation of the Vision Transformer model
