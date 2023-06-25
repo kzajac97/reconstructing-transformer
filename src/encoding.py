@@ -1,5 +1,4 @@
 import math
-import torch
 from functools import cached_property
 
 
@@ -9,7 +8,7 @@ class PositionalEncoder(torch.nn.Module):
     Based on the implementation provided by PyTorch: https://pytorch.org/tutorials/beginner/transformer_tutorial.html
     """
 
-    def __init__(self, d_model: int = 16, max_len: int = 50, dropout: float = 0.0):
+    def __init__(self, d_model: int = 16, max_len: int = 50, dropout: float = 0.0, device: str = "cpu"):
         """
         :param d_model: dimension of the transformer model
         :param max_len: maximum length of the sequence supported by encoding module
@@ -19,7 +18,10 @@ class PositionalEncoder(torch.nn.Module):
 
         self.d_model = d_model
         self.max_len = max_len
-        self.dropout = torch.nn.Dropout(p=dropout)
+        self.device = device
+        self.registered: bool = False
+
+        self.dropout = torch.nn.Dropout(p=dropout).to(device)
 
     @cached_property
     def positional_encoding(self) -> torch.Tensor:
@@ -30,7 +32,7 @@ class PositionalEncoder(torch.nn.Module):
         encoding[:, 0::2] = torch.sin(position * div_term)
         encoding[:, 1::2] = torch.cos(position * div_term)
 
-        return encoding
+        return encoding.to(self.device)
 
     @torch.no_grad()
     def forward(self, x: torch.Tensor) -> torch.Tensor:
