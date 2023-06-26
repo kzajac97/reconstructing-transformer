@@ -1,0 +1,6 @@
+numpy==1.22.3
+seaborn==0.12.2
+scikit-image==0.21.0
+scikit-learn==1.2.1
+lovely-tensors==0.1.15
+wandb==0.13.10
