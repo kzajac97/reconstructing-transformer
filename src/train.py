@@ -47,7 +47,7 @@ def predict(model: torch.nn.Module, data_loader: Iterable) -> Tuple[torch.Tensor
             predictions.append(y_pred)
             targets.append(y_true)
 
-        return torch.cat(targets), torch.cat(predictions)
+    return torch.cat(targets), torch.cat(predictions)
 
 
 def evaluate(y_true: Iterable, y_pred: Iterable) -> dict[str, float]:
