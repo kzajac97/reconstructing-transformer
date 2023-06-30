@@ -1,6 +1,6 @@
 import torch
-from positional_encoder import PositionalEncoder
 
+from encoding import PositionalEncoder
 from patcher import ImagePatcher
 
 
@@ -35,7 +35,7 @@ class MiniVisionTransformerClassifier(torch.nn.Module):
         self.patcher = ImagePatcher(patch_size=patch_size, stride=patch_size, device=device)
         self.embedding = torch.nn.Linear(in_features=model_dim, out_features=model_dim, bias=False).to(device)
         self.positional_encoding = PositionalEncoder(d_model=model_dim, max_len=1 + patches_in_image, device=device)
-        self.pooler = torch.nn.Parameter(torch.rand(1, model_dim)).to(device)
+        self.pooler = torch.nn.Linear(in_features=patches_in_image * model_dim, out_features=model_dim).to(device)
 
         self.encoder = torch.nn.TransformerEncoder(
             torch.nn.TransformerEncoderLayer(
@@ -46,17 +46,14 @@ class MiniVisionTransformerClassifier(torch.nn.Module):
 
         self.classifier = torch.nn.Linear(in_features=model_dim, out_features=num_classes).to(device)
 
-    def forward(self, batch: torch.Tensor, return_embeddings: bool = False) -> torch.Tensor:
+    def forward(self, batch: torch.Tensor) -> torch.Tensor:
         patches = self.patcher(batch)
         embeddings = self.embedding(patches)
-        embeddings = torch.cat([self.pooler.expand(batch.size(0), 1, -1), embeddings], dim=1)
         embeddings = self.positional_encoding(embeddings)
         embeddings = self.encoder(embeddings)
 
-        logits = self.classifier(embeddings[:, 0, :])
+        outputs = self.pooler(embeddings.flatten(start_dim=1))
+        logits = self.classifier(outputs)
         predictions = torch.nn.functional.softmax(logits, dim=-1)
-
-        if return_embeddings:
-            return predictions, embeddings
 
         return predictions
