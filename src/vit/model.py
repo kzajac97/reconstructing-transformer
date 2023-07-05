@@ -33,7 +33,7 @@ class MiniVisionTransformerClassifier(torch.nn.Module):
         super().__init__()
 
         self.patcher = ImagePatcher(patch_size=patch_size, stride=patch_size, device=device)
-        self.embedding = torch.nn.Linear(in_features=model_dim, out_features=model_dim, bias=False).to(device)
+        self.embedding = torch.nn.Linear(in_features=patch_size ** 2, out_features=model_dim, bias=False).to(device)
         self.positional_encoding = PositionalEncoder(d_model=model_dim, max_len=1 + patches_in_image, device=device)
         self.pooler = torch.nn.Linear(in_features=patches_in_image * model_dim, out_features=model_dim).to(device)
 
