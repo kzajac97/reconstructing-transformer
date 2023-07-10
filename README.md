@@ -2,6 +2,8 @@
 
 Set of notebooks used to demonstrate how transformers work using code and real data.
 
+All runs are added to W&B project: [https://wandb.ai/kzajac/vision-transformer](https://wandb.ai/kzajac/vision-transformer).
+
 ### Notebooks
 
 * `encoder-decoder-for-machine-translation.ipynb` - using vanilla architecture of encoder-decoder transformer for German to English machine translation
@@ -29,8 +31,9 @@ having over 97% accuracy. The implementation of VIT on such dataset serves mostl
 
 | Model                | Number of Parameters | Accuracy | F1Score | Training Time |
 |----------------------|----------------------|----------|---------|---------------|
-| CNN Baseline         | 1199882              | 0.9894   | 0.98935 | 3m 05 s       |
+| CNN Baseline         | 1199882              | 0.9894   | 0.9894  | 3m 05 s       |
 | Deep ViT             | 502346               | 0.9838   | 0.9836  | 6m 56 s       |
 | Large ViT            | 1327050              | 0.9825   | 0.9824  | 5m 53 s       |
-| Small ViT            | 150490               | 0.9703   | 0.9701  | 4m 56 s       |
 | Feedforward Baseline | 104938               | 0.9728   | 0.9725  | 2m 52 s       |
+| Small ViT            | 150490               | 0.9703   | 0.9701  | 4m 56 s       |
+
