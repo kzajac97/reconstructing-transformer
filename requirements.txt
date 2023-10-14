@@ -4,5 +4,5 @@ scikit-image==0.21.0
 scikit-learn==1.2.1
 lovely-tensors==0.1.15
 wandb==0.13.10
-transformers==4.29.2
+transformers==4.34.0
 sentencepiece==0.1.99
