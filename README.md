@@ -10,13 +10,13 @@ All runs are added to W&B project: [https://wandb.ai/kzajac/vision-transformer](
 * `reconstructing-transformer.ipynb` - notebook with exploration of transformer code connected to equations from the paper
 * `vision-transformer-for-mnist.ipynb` - notebook with minimal implementation of Vision Transformer (ViT) for image classification using MNIST
 
-### Sources
-
-Source code contains minimal implementation of ViT model using PyTorch. 
-
 ### Requirements
 
-To run it is best to use `Dockerfile` provided in the repository. It contains all necessary dependencies.
+The repository contains docker multiple files, which can be used to build docker images to run different notebooks or 
+parts of code. All images are stored in `docker` directory, each with its own requirements. Current images:
+* `generic` - running notebooks and visualizing results (CPU only), for example `reconstructing-transformer.ipynb`
+* `vit` - running examples of VIT training
+* `llama` - running examples of LLAMA-2 fine-tuning
 
 # Contents
 
@@ -36,4 +36,3 @@ having over 97% accuracy. The implementation of VIT on such dataset serves mostl
 | Large ViT            | 1327050              | 0.9825   | 0.9824  | 5m 53 s       |
 | Feedforward Baseline | 104938               | 0.9728   | 0.9725  | 2m 52 s       |
 | Small ViT            | 150490               | 0.9703   | 0.9701  | 4m 56 s       |
-
