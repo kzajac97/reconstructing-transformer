@@ -20,10 +20,27 @@ parts of code. All images are stored in `docker` directory, each with its own re
 
 # Contents
 
+## LLAMA-2
+
+LLAMA-2 is open-source LLM, which can be freely interacted with. In this case the model was fine-tuned using a suite
+of HuggingFace libraries, namely using quantized LoRA for sequence classification task using common 20 newsgroups
+dataset. The task is simple and small enough, so the model can be trained on GPU in reasonable time. Table below
+contains results of training and evaluation of the model, with a few baselines. The experiments are non-exhaustive and
+are mostly example of usage of the model.
+
+| Model      | Training Method       | Model Size | Accuracy | F1Score | Training Time |
+|------------|-----------------------|------------|----------|---------|---------------|
+| TF-IDF     | Training from Scratch |            |          |         |               |
+| RoBERTa    | Task-Head             |            |          |         |               |
+| RoBERTa    | Fine-Tuning           |            |          |         |               |
+| LLAMA-2 7B | LoRA 4bit             |            |          |         |               |
+| LLAMA-2 7B | LoRA 8bit             | 6.339 GB   |          |         |               |
+
 ## Vision Transformer
 
-Vision transformer model is implemented in the source code package. Training and evaluation is done in the notebook `vision-transformer-for-mnist.ipynb`,
-which can be run for test purpose with different model parameters. Non-exhaustive experiments show following results.
+Vision transformer model is implemented in the source code package. Training and evaluation is done in the notebook
+`vision-transformer-for-mnist.ipynb`, which can be run for test purpose with different model parameters. Non-exhaustive
+experiments show following results.
 
 Baselines are added to the `models.py` file and executed using the same notebook as ViT models. For the MNIST problem,
 CNN model is performing better than ViT models, but the problem is simple and can be considered solved with all models 
