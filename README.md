@@ -28,14 +28,6 @@ dataset. The task is simple and small enough, so the model can be trained on GPU
 contains results of training and evaluation of the model, with a few baselines. The experiments are non-exhaustive and
 are mostly example of usage of the model.
 
-| Model      | Training Method       | Model Size | Accuracy | F1Score | Training Time |
-|------------|-----------------------|------------|----------|---------|---------------|
-| TF-IDF     | Training from Scratch |            |          |         |               |
-| RoBERTa    | Task-Head             |            |          |         |               |
-| RoBERTa    | Fine-Tuning           |            |          |         |               |
-| LLAMA-2 7B | LoRA 4bit             |            |          |         |               |
-| LLAMA-2 7B | LoRA 8bit             | 6.339 GB   |          |         |               |
-
 ## Vision Transformer
 
 Vision transformer model is implemented in the source code package. Training and evaluation is done in the notebook
