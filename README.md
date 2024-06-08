@@ -10,20 +10,37 @@ All runs are added to W&B project: [https://wandb.ai/kzajac/vision-transformer](
 * `reconstructing-transformer.ipynb` - notebook with exploration of transformer code connected to equations from the paper
 * `vision-transformer-for-mnist.ipynb` - notebook with minimal implementation of Vision Transformer (ViT) for image classification using MNIST
 
-### Sources
-
-Source code contains minimal implementation of ViT model using PyTorch. 
-
 ### Requirements
 
-To run it is best to use `Dockerfile` provided in the repository. It contains all necessary dependencies.
+The repository contains docker multiple files, which can be used to build docker images to run different notebooks or 
+parts of code. All images are stored in `docker` directory, each with its own requirements. Current images:
+* `generic` - running notebooks and visualizing results (CPU only), for example `reconstructing-transformer.ipynb`
+* `vit` - running examples of VIT training
+* `llama` - running examples of LLAMA-2 fine-tuning
 
 # Contents
 
+## LLAMA-2
+
+LLAMA-2 is open-source LLM, which can be freely interacted with. In this case the model was fine-tuned using a suite
+of HuggingFace libraries, namely using quantized LoRA for sequence classification task using common 20 newsgroups
+dataset. The task is simple and small enough, so the model can be trained on GPU in reasonable time. Table below
+contains results of training and evaluation of the model, with a few baselines. The experiments are non-exhaustive and
+are mostly example of usage of the model.
+
+| Model      | Training Method       | Model Size | Accuracy | F1Score | Training Time |
+|------------|-----------------------|------------|----------|---------|---------------|
+| TF-IDF     | Training from Scratch |            |          |         |               |
+| RoBERTa    | Task-Head             |            |          |         |               |
+| RoBERTa    | Fine-Tuning           |            |          |         |               |
+| LLAMA-2 7B | LoRA 4bit             |            |          |         |               |
+| LLAMA-2 7B | LoRA 8bit             | 6.339 GB   |          |         |               |
+
 ## Vision Transformer
 
-Vision transformer model is implemented in the source code package. Training and evaluation is done in the notebook `vision-transformer-for-mnist.ipynb`,
-which can be run for test purpose with different model parameters. Non-exhaustive experiments show following results.
+Vision transformer model is implemented in the source code package. Training and evaluation is done in the notebook
+`vision-transformer-for-mnist.ipynb`, which can be run for test purpose with different model parameters. Non-exhaustive
+experiments show following results.
 
 Baselines are added to the `models.py` file and executed using the same notebook as ViT models. For the MNIST problem,
 CNN model is performing better than ViT models, but the problem is simple and can be considered solved with all models 
@@ -34,6 +51,5 @@ having over 97% accuracy. The implementation of VIT on such dataset serves mostl
 | CNN Baseline         | 1199882              | 0.9894   | 0.9894  | 3m 05 s       |
 | Deep ViT             | 502346               | 0.9838   | 0.9836  | 6m 56 s       |
 | Large ViT            | 1327050              | 0.9825   | 0.9824  | 5m 53 s       |
-| Feedforward Baseline | 104938               | 0.9728   | 0.9725  | 2m 52 s       |
 | Small ViT            | 150490               | 0.9703   | 0.9701  | 4m 56 s       |
-
+| Feedforward Baseline | 104938               | 0.9728   | 0.9725  | 2m 52 s       |
